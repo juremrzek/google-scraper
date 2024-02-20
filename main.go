@@ -39,7 +39,7 @@ func main() {
 	}
 	fmt.Println(input)
 
-	htmlFile, err := os.ReadFile(input) //Here is the input html file
+	htmlFile, err := os.ReadFile(input) //Read the input html file
 	if err != nil {
 		panic(err)
 	}
@@ -55,7 +55,7 @@ func main() {
 		input = "selectors_sushi.json"
 	}
 
-	jsonFile, err := os.ReadFile(input) //Here is the input json file
+	jsonFile, err := os.ReadFile(input) //Read the input json file
 	if err != nil {
 		panic(err)
 	}
@@ -63,7 +63,7 @@ func main() {
 
 	var jsonElements []JSONElementIn
 
-	//
+	//parse the input JSON file
 	if err := json.Unmarshal(jsonFile, &jsonElements); err != nil {
 		panic(err)
 	}
@@ -76,10 +76,12 @@ func main() {
 
 	var dataArray []JSONElementOut
 
+	//Loop over each rank type
 	for _, el := range jsonElements {
 
 		var infoArray []Information
 
+		//Loop over instances of the rank type
 		doc.Find(el.Selector).Each(func(rank int, s *goquery.Selection) {
 
 			url, _ := s.Find(el.Url).First().Attr("href")
@@ -104,11 +106,13 @@ func main() {
 
 	}
 
+	//Parse go data into JSON data
 	jsonData, err := json.MarshalIndent(dataArray, "", " ")
 	if err != nil {
 		panic(err)
 	}
 
+	//Write JSON data into a file
 	_, err = file.Write(jsonData)
 	if err != nil {
 		panic(err)
