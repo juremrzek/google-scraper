@@ -31,7 +31,15 @@ type JSONElementOut struct {
 
 func main() {
 
-	htmlFile, err := os.ReadFile("sushi.html") //Here is the input html file
+	fmt.Print("Enter the name of html file: ")
+	var input string
+	fmt.Scanln(&input)
+	if len(input) == 0 {
+		input = "sushi.html"
+	}
+	fmt.Println(input)
+
+	htmlFile, err := os.ReadFile(input) //Here is the input html file
 	if err != nil {
 		panic(err)
 	}
@@ -40,16 +48,22 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	input = ""
+	fmt.Print("Enter the name of json file: ")
+	fmt.Scanln(&input)
+	if len(input) == 0 {
+		input = "selectors_sushi.json"
+	}
 
-	jsonFile, err := os.ReadFile("selectors_sushi.json") //Here is the input json file
+	jsonFile, err := os.ReadFile(input) //Here is the input json file
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(input)
 
 	var jsonElements []JSONElementIn
 
-	//json.Unmarshal(jsonFile, &jsonElements)
-
+	//
 	if err := json.Unmarshal(jsonFile, &jsonElements); err != nil {
 		panic(err)
 	}
