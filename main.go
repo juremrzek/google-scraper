@@ -60,17 +60,41 @@ func main() {
 	}
 	fmt.Println(input)
 
-	var jsonElements []CSSSelector
+	var cssSelectors []CSSSelector
 
 	//parse the input JSON file
-	if err := json.Unmarshal(jsonFile, &jsonElements); err != nil {
+	if err := json.Unmarshal(jsonFile, &cssSelectors); err != nil {
 		panic(err)
 	}
 
-	var dataArray []SearchResult
+	searchResults := getSearchResultInformation(doc, cssSelectors)
+
+	//Parse search result data into JSON data
+	jsonData, err := json.MarshalIndent(searchResults, "", " ")
+	if err != nil {
+		panic(err)
+	}
+
+	//Write JSON data into a file
+	file, err := os.Create("result.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	_, err = file.Write(jsonData)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("JSON file created.")
+
+}
+
+func getSearchResultInformation(doc *goquery.Document, selectors []CSSSelector) []SearchResult {
+	var searchResults []SearchResult
 
 	//Loop over each rank type
-	for _, el := range jsonElements {
+	for _, el := range selectors {
 
 		var infoArray []SearchResultInformation
 
@@ -91,31 +115,11 @@ func main() {
 
 		})
 
-		data := SearchResult{
+		searchResult := SearchResult{
 			RankType: el.RankType,
 			Info:     infoArray,
 		}
-		dataArray = append(dataArray, data)
-
+		searchResults = append(searchResults, searchResult)
 	}
-
-	//Parse go data into JSON data
-	jsonData, err := json.MarshalIndent(dataArray, "", " ")
-	if err != nil {
-		panic(err)
-	}
-
-	//Write JSON data into a file
-	file, err := os.Create("result.json")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	_, err = file.Write(jsonData)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("JSON file created.")
-
+	return searchResults
 }
