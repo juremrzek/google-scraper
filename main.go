@@ -31,13 +31,12 @@ type SearchResult struct {
 
 func main() {
 
-	fmt.Print("Enter the name of html file: ")
 	var input string
-	fmt.Scanln(&input)
-	if len(input) == 0 {
+	if len(os.Args) > 1 {
+		input = os.Args[1]
+	} else {
 		input = "sushi.html"
 	}
-	fmt.Println(input)
 
 	htmlFile, err := os.ReadFile(input) //Read the input html file
 	if err != nil {
@@ -48,10 +47,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	input = ""
-	fmt.Print("Enter the name of json file: ")
-	fmt.Scanln(&input)
-	if len(input) == 0 {
+
+	if len(os.Args) > 2 {
+		input = os.Args[2]
+	} else {
 		input = "selectors_sushi.json"
 	}
 
