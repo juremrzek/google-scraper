@@ -1,35 +1,35 @@
 [
     {
         "rankType": "organic",
-        "selector": "div.g.Ww4FFb.vt6azd.tF2Cxc.asEBEc",
+        "result": "div.g.Ww4FFb.vt6azd.tF2Cxc.asEBEc",
         "title": "h3",
         "url": "a",
         "description": ".VwiC3b, .yXK7lf, .lVm3ye, .r025kc, .hJNv6b, .aCOpRe"
     },
     {
         "rankType": "local",
-        "selector": "",
+        "result": "",
         "title": "",
         "url": "",
         "description": ""
     },
     {
         "rankType": "carousel",
-        "selector": "div.v1uiFd",
+        "result": "div.v1uiFd",
         "title": "div.hfac6d.LviCwe.tNxQIb.ynAwRc",
         "url": "a",
         "description": "cite.KuNgxf"
     },
     {
         "rankType": "knowledgePanel",
-        "selector": ".I6TXqe",
+        "result": ".I6TXqe",
         "title": ".PZPZlf.ssJ7i.B5dxMb",
         "url": ".ruhjFe.NJLBac.fl",
         "description": ".kno-rdesc span"
     },
     {
         "rankType": "featuredSnippet",
-        "selector": "div.g.wF4fFd.JnwWd.g-blk",
+        "result": "div.g.wF4fFd.JnwWd.g-blk",
         "title": ".LC20lb.MBeuO.DKV0Md",
         "url": "a",
         "description": ".hgKElc"

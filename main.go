@@ -9,9 +9,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type SearchResultSelector struct {
+type CSSSelector struct {
 	RankType    string `json:"rankType"`
-	Selector    string `json:"selector"`
+	Result      string `json:"result"` //selector of the entire search result element.
 	Title       string `json:"title"`
 	Url         string `json:"url"`
 	Description string `json:"description"`
@@ -61,7 +61,7 @@ func main() {
 	}
 	fmt.Println(input)
 
-	var jsonElements []SearchResultSelector
+	var jsonElements []CSSSelector
 
 	//parse the input JSON file
 	if err := json.Unmarshal(jsonFile, &jsonElements); err != nil {
@@ -76,7 +76,7 @@ func main() {
 		var infoArray []SearchResultInformation
 
 		//Loop over instances of the rank type
-		doc.Find(el.Selector).Each(func(rank int, s *goquery.Selection) {
+		doc.Find(el.Result).Each(func(rank int, s *goquery.Selection) {
 
 			url, _ := s.Find(el.Url).First().Attr("href")
 			title := s.Find(el.Title).First().Text()
