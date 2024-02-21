@@ -9,7 +9,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type JSONElementIn struct {
+type SearchResultSelector struct {
 	RankType    string `json:"rankType"`
 	Selector    string `json:"selector"`
 	Title       string `json:"title"`
@@ -17,16 +17,16 @@ type JSONElementIn struct {
 	Description string `json:"description"`
 }
 
-type Information struct {
+type SearchResultInformation struct {
 	Rank        int    `json:"rank"`
 	Title       string `json:"title"`
 	Url         string `json:"url"`
 	Description string `json:"description"`
 }
 
-type JSONElementOut struct {
-	RankType string        `json:"rankType"`
-	Info     []Information `json:"info"`
+type SearchResult struct {
+	RankType string                    `json:"rankType"`
+	Info     []SearchResultInformation `json:"info"`
 }
 
 func main() {
@@ -61,19 +61,19 @@ func main() {
 	}
 	fmt.Println(input)
 
-	var jsonElements []JSONElementIn
+	var jsonElements []SearchResultSelector
 
 	//parse the input JSON file
 	if err := json.Unmarshal(jsonFile, &jsonElements); err != nil {
 		panic(err)
 	}
 
-	var dataArray []JSONElementOut
+	var dataArray []SearchResult
 
 	//Loop over each rank type
 	for _, el := range jsonElements {
 
-		var infoArray []Information
+		var infoArray []SearchResultInformation
 
 		//Loop over instances of the rank type
 		doc.Find(el.Selector).Each(func(rank int, s *goquery.Selection) {
@@ -82,7 +82,7 @@ func main() {
 			title := s.Find(el.Title).First().Text()
 			desc := s.Find(el.Description).First().Text()
 
-			info := Information{
+			info := SearchResultInformation{
 				Rank:        rank + 1,
 				Url:         url,
 				Title:       title,
@@ -92,7 +92,7 @@ func main() {
 
 		})
 
-		data := JSONElementOut{
+		data := SearchResult{
 			RankType: el.RankType,
 			Info:     infoArray,
 		}
