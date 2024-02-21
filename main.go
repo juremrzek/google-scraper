@@ -68,12 +68,6 @@ func main() {
 		panic(err)
 	}
 
-	file, err := os.Create("result.json")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
 	var dataArray []JSONElementOut
 
 	//Loop over each rank type
@@ -113,6 +107,11 @@ func main() {
 	}
 
 	//Write JSON data into a file
+	file, err := os.Create("result.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
 	_, err = file.Write(jsonData)
 	if err != nil {
 		panic(err)
